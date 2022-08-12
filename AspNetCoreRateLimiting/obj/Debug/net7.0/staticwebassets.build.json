@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Ifukrqhxc09bfveRYQEvqwnZKzDAtiu3FzASCtf3HDE=",
+  "Source": "AspNetCoreRateLimiting",
+  "BasePath": "_content/AspNetCoreRateLimiting",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
