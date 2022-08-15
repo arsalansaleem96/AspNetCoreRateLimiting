@@ -32,13 +32,21 @@ app.UseRateLimiter(new RateLimiterOptions
         //     return RateLimitPartition.CreateNoLimiter<string>("UnlimitedRequests");
         // }
         // return RateLimitPartition.CreateConcurrencyLimiter<string>("GeneralLimit",
-        //     _ => new ConcurrencyLimiterOptions(1, QueueProcessingOrder.NewestFirst,0));
+        //     _ => new ConcurrencyLimiterOptions(5, QueueProcessingOrder.OldestFirst,4));
 
 
-        return RateLimitPartition.CreateTokenBucketLimiter<string>("TokenBased",
-            _ => new TokenBucketRateLimiterOptions(10,
-                QueueProcessingOrder.NewestFirst, 0,
-                TimeSpan.FromSeconds(10), 10));
+        // return RateLimitPartition.CreateTokenBucketLimiter<string>("TokenBased",
+        //     _ => new TokenBucketRateLimiterOptions(10,
+        //         QueueProcessingOrder.OldestFirst, 0,
+        //         TimeSpan.FromSeconds(10), 10));
+
+        // return RateLimitPartition.CreateFixedWindowLimiter<string>("FixedWindow",
+        //     _ => new FixedWindowRateLimiterOptions(permitLimit: 2, queueProcessingOrder: QueueProcessingOrder.OldestFirst, queueLimit: 0,
+        //         window: TimeSpan.FromSeconds(10), autoReplenishment: true));
+        
+        return RateLimitPartition.CreateSlidingWindowLimiter<string>("SlidingWindow",
+            _ => new SlidingWindowRateLimiterOptions(permitLimit: 2,queueProcessingOrder: QueueProcessingOrder.OldestFirst, 
+                queueLimit: 1, window: TimeSpan.FromSeconds(10), segmentsPerWindow: 5, autoReplenishment: true));
 
     }),
     RejectionStatusCode = 429
